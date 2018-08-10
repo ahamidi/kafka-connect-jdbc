@@ -21,3 +21,8 @@ You will also need to create the Consumer Group `kafka-connect`
 * `POSTGRES_ADDON`
 * `TRUSTSTORE_PASSWORD`
 * `KEYSTORE_PASSWORD`
+
+### Buildpacks
+
+* Apt: `https://github.com/heroku/heroku-buildpack-apt`
+* JVM: `heroku/jvm`
