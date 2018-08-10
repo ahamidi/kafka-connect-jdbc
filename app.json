@@ -1,0 +1,35 @@
+{
+  "name": "Kafka Connect JDBC Connector",
+  "description": "Kafka Connect JDBC connector configured for Heroku Data",
+  "keywords": [
+    "Kafka",
+    "Postgres",
+    "Connect",
+    "CDC"
+  ],
+  "repository": "https://github.com/ahamidi/kafka-connect-jdbc",
+  "env": {
+    "TRUSTSTORE_PASSWORD": {
+      "description": "Password used for the Java truststore",
+      "generator": "secret"
+    },
+    "KEYSTORE_PASSWORD": {
+      "description": "Password used for the Java keystore",
+      "generator": "secret"
+    }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "Standard-1X"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-apt"
+    },
+    {
+      "url": "heroku/jvm"
+    }
+  ]
+}
