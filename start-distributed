@@ -36,7 +36,7 @@ ssl.key.password=$KEYSTORE_PASSWORD
 
 bootstrap.servers=${!kafka_url_env_var//kafka+ssl:\/\//}
 
-group.id=${${kafka_prefix}-}connect-cluster
+group.id=$(echo $kafka_prefix)connect-cluster
 
 key.converter=org.apache.kafka.connect.json.JsonConverter
 value.converter=org.apache.kafka.connect.json.JsonConverter
