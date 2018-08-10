@@ -33,7 +33,7 @@ ssl.keystore.location=$HOME/.keystore.jks
 ssl.keystore.password=$KEYSTORE_PASSWORD
 ssl.key.password=$KEYSTORE_PASSWORD
 
-bootstrap.servers=${${addon_name}_URL//kafka+ssl:\/\//}
+bootstrap.servers=${${kafka_addon_name}_URL//kafka+ssl:\/\//}
 
 group.id=${${kafka_prefix}-}connect-cluster
 
