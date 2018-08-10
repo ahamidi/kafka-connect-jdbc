@@ -3,7 +3,8 @@
 DYNO_CONNECT_DISTRIBUTED_PROPERTIES_FILE="dyno-connect-distributed.properties"
 
 kafka_addon_name=${KAFKA_ADDON:-KAFKA}
-kafka_prefix="$(echo $kafka_addon_name)_PREFIX"
+prefix_env_var="$(echo $kafka_addon_name)_PREFIX"
+kafka_prefix=$(echo ${!prefix_env_var})
 postgres_addon_name=${POSTGRES_ADDON:-DATABASE}
 
 
