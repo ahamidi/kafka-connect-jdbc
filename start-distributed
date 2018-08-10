@@ -8,7 +8,7 @@ kafka_prefix=$(echo ${!prefix_env_var})
 postgres_addon_name=${POSTGRES_ADDON:-DATABASE}
 
 
-./setup_certs $addon_name
+./setup_certs $kafka_addon_name
 
 cat > $DYNO_CONNECT_DISTRIBUTED_PROPERTIES_FILE <<PROPERTIES
 producer.security.protocol=SSL
