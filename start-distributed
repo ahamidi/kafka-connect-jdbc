@@ -26,6 +26,7 @@ consumer.ssl.truststore.password=$TRUSTSTORE_PASSWORD
 consumer.ssl.keystore.location=$HOME/.keystore.jks
 consumer.ssl.keystore.password=$KEYSTORE_PASSWORD
 consumer.ssl.key.password=$KEYSTORE_PASSWORD
+consumer.ssl.endpoint.identification.algorithm=
 
 security.protocol=SSL
 ssl.truststore.location=$HOME/.truststore.jks
@@ -33,6 +34,7 @@ ssl.truststore.password=$TRUSTSTORE_PASSWORD
 ssl.keystore.location=$HOME/.keystore.jks
 ssl.keystore.password=$KEYSTORE_PASSWORD
 ssl.key.password=$KEYSTORE_PASSWORD
+ssl.endpoint.identification.algorithm=
 
 bootstrap.servers=${!kafka_url_env_var//kafka+ssl:\/\//}
 
