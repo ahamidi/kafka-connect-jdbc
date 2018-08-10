@@ -5,6 +5,7 @@ DYNO_CONNECT_DISTRIBUTED_PROPERTIES_FILE="dyno-connect-distributed.properties"
 kafka_addon_name=${KAFKA_ADDON:-KAFKA}
 prefix_env_var="$(echo $kafka_addon_name)_PREFIX"
 kafka_prefix=$(echo ${!prefix_env_var})
+kafka_url_env_var="$(echo $kafka_addon_name)_URL"
 postgres_addon_name=${POSTGRES_ADDON:-DATABASE}
 
 
@@ -33,7 +34,7 @@ ssl.keystore.location=$HOME/.keystore.jks
 ssl.keystore.password=$KEYSTORE_PASSWORD
 ssl.key.password=$KEYSTORE_PASSWORD
 
-bootstrap.servers=${${kafka_addon_name}_URL//kafka+ssl:\/\//}
+bootstrap.servers=${kafka_url_env_var//kafka+ssl:\/\//}
 
 group.id=${${kafka_prefix}-}connect-cluster
 
