@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+
+connector_name="$1"
+kafka_addon_name=${KAFKA_ADDON:-KAFKA}
+prefix_env_var="$(echo $kafka_addon_name)_PREFIX"
+kafka_prefix=$(echo ${!prefix_env_var})
+postgres_addon_name=${POSTGRES_ADDON:-DATABASE}
+jdbc_env_var="JDBC_$(echo $postgres_addon_name)_URL"
+jdbc_url=$(echo ${!jdbc_env_var})
+
+[ -z $connector_name ] && {
+  echo "connector name must be provided" >&2
+  exit 1
+}
+
+[ -z $TABLE_WHITELIST ] && {
+  echo "TABLE_WHITELIST is missing" >&2
+  exit 1
+}
+
+[ -z $postgres_addon_name ] && {
+  echo "$postgres_addon_name is missing" >&2
+  exit 1
+}
+
+curl -X POST localhost:8080/connectors -H "Content-Type: application/json" --data @- << EOF
+{
+  "name": "$connector_name",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "tasks.max": "1",
+    "connection.url":"$jdbc_url",
+    "connection.attempts":"3",
+    "connection.backoff.ms":"10000",
+    "table.whitelist":"$TABLE_WHITELIST",
+    "mode":"incrementing",
+    "incrementing.column.name":"${INCREMENTING_COLUMN:-id}",
+    "poll.interval.ms":"5000",
+    "batch.max.rows":"100",
+    "table.poll.interval.ms":"60000",
+    "topic.prefix":"$(echo $kafka_prefix)pg-",
+    "table.types":"TABLE",
+    "timestamp.delay.interval.ms":"0"
+  }
+}
+EOF
+

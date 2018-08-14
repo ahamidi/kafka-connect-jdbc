@@ -1,1 +1,1 @@
-web: ./start-distributed
+worker: ./start-distributed
