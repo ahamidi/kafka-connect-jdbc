@@ -24,7 +24,7 @@ jdbc_url=$(echo ${!jdbc_env_var})
   exit 1
 }
 
-curl -X POST localhost:8080/connectors -H "Content-Type: application/json" --data @- << EOF
+curl -s -X POST localhost:8080/connectors -H "Content-Type: application/json" --data @- << EOF
 {
   "name": "$connector_name",
   "config": {

@@ -32,7 +32,7 @@ You will also need to create the Consumer Group `kafka-connect`
 ## Usage
 
 Once you have deployed this app, you will need to scale up the dyno. A `Standard-2X` 
-or larger dyno is recommended.
+at a minimum is required, but a Performance-M or larger dyno is recommended.
 
 ```
 # Scale the dyno
