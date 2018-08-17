@@ -12,8 +12,13 @@
 For each Postgres Table that is being sync'd, you will need to create an associated
 Kafka topic using the naming scheme `pg-<table_name>`.
 
+You will also need to create the following topics for use by connect itself:
+* connect-offsets
+* connect-configs
+* connect-status
+
 **Kafka Consumer Group**
-You will also need to create the Consumer Group `kafka-connect`
+You will also need to create the Consumer Group `connect-cluster`
 
 ### Config Vars
 
