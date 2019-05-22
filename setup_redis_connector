@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-unzip jcustenborder-kafka-connect-redis-0.0.2-SNAPSHOT.zip
+unzip -qq jcustenborder-kafka-connect-redis-0.0.2-SNAPSHOT.zip -d kafka-connect-redis
+ln -s kafka-connect-redis/jcustenborder-kafka-connect-redis-0.0.2-SNAPSHOT/lib .apt/usr/share/java/kafka-connect-redis 
