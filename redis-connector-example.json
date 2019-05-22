@@ -1,0 +1,15 @@
+
+{
+  "name": "redis-connector",
+  "config": {
+    "connector.class": "com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector",
+    "tasks.max": "1",
+    "topics":"events",
+    "redis.hosts":"localhost:6379",
+    "redis.password":"password",
+    "redis.client.mode":"Standalone",
+    "redis.auto.reconnect.enabled": true,
+    "key.converter":"org.apache.kafka.connect.converters.ByteArrayConverter",
+    "value.converter":"org.apache.kafka.connect.converters.ByteArrayConverter"
+  }
+}
