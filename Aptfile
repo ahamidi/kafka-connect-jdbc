@@ -3,3 +3,4 @@ confluent-kafka-2.11
 confluent-schema-registry
 confluent-kafka-connect-jdbc
 jq
+unzip

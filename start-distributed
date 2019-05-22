@@ -21,6 +21,7 @@ export TRUSTSTORE_PASSWORD=$(cat /proc/sys/kernel/random/uuid)
 export KEYSTORE_PASSWORD=$(cat /proc/sys/kernel/random/uuid)
 
 ./setup_certs $kafka_addon_name
+./setup_redis_connector
 
 cat > $PASSWORD_FILE <<PASSWORDFILE
 $connect_username: $connect_password
