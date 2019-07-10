@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
+set -e
 
 connector_name="$1"
 app_url="$2"
 kafka_addon_name=${KAFKA_ADDON:-KAFKA}
-prefix_env_var="$(echo $kafka_addon_name)_PREFIX"
-kafka_prefix=$(echo ${!prefix_env_var})
 postgres_addon_name=${POSTGRES_ADDON:-DATABASE}
 jdbc_env_var="JDBC_$(echo $postgres_addon_name)_URL"
 jdbc_url=$(echo ${!jdbc_env_var})
@@ -37,10 +36,10 @@ connect_password=${CONNECT_PASSWORD}
   exit 1
 }
 cat > curl_netrc <<CURLNETRC
-machine localhost login $connect_username password $connect_password
+machine $app_url login $connect_username password $connect_password
 CURLNETRC
 
-curl --netrc-file ./curl_netrc -s -X POST $app_url:8080/connectors -H "Content-Type: application/json" --data @- << EOF
+curl --netrc-file ./curl_netrc -X POST https://$app_url/connectors -H "Content-Type: application/json" --data @- << EOF
 {
   "name": "$connector_name",
   "config": {
@@ -55,7 +54,7 @@ curl --netrc-file ./curl_netrc -s -X POST $app_url:8080/connectors -H "Content-T
     "poll.interval.ms":"5000",
     "batch.max.rows":"100",
     "table.poll.interval.ms":"60000",
-    "topic.prefix":"$(echo $kafka_prefix)pg-",
+    "topic.prefix":"pg-",
     "table.types":"TABLE",
     "timestamp.delay.interval.ms":"0"
   }
