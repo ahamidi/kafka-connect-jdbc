@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
 DYNO_CONNECT_DISTRIBUTED_PROPERTIES_FILE="dyno-connect-distributed.properties"
+PASSWORD_FILE="connect.password"
+JAAS_FILE="connect_jaas.conf"
+
+connect_username=${CONNECT_USERNAME:-connect}
+connect_password=${CONNECT_PASSWORD}
+[ -z $CONNECT_PASSWORD ] && {
+  echo "CONNECT_PASSWORD is missing" >&2
+  exit 1
+}
 
 kafka_addon_name=${KAFKA_ADDON:-KAFKA}
 prefix_env_var="$(echo $kafka_addon_name)_PREFIX"
@@ -8,8 +17,21 @@ kafka_prefix=$(echo ${!prefix_env_var})
 kafka_url_env_var="$(echo $kafka_addon_name)_URL"
 postgres_addon_name=${POSTGRES_ADDON:-DATABASE}
 
+export TRUSTSTORE_PASSWORD=$(cat /proc/sys/kernel/random/uuid)
+export KEYSTORE_PASSWORD=$(cat /proc/sys/kernel/random/uuid)
 
 ./setup_certs $kafka_addon_name
+
+cat > $PASSWORD_FILE <<PASSWORDFILE
+$connect_username: $connect_password
+PASSWORDFILE
+
+cat > $JAAS_FILE << JAAS
+KafkaConnect {
+    org.apache.kafka.connect.rest.basic.auth.extension.PropertyFileLoginModule required
+    file="$HOME/$PASSWORD_FILE";
+};
+JAAS
 
 cat > $DYNO_CONNECT_DISTRIBUTED_PROPERTIES_FILE <<PROPERTIES
 producer.security.protocol=SSL
@@ -69,6 +91,7 @@ rest.port=$PORT
 # The Hostname & Port that will be given out to other workers to connect to i.e. URLs that are routable from other servers.
 #rest.advertised.host.name=
 #rest.advertised.port=
+rest.extension.classes=org.apache.kafka.connect.rest.basic.auth.extension.BasicAuthSecurityRestExtension
 
 # Set to a list of filesystem paths separated by commas (,) to enable class loading isolation for plugins
 # (connectors, converters, transformations). The list should consist of top level directories that include 
@@ -84,4 +107,4 @@ PROPERTIES
 mkdir .apt/usr/config
 cp .apt/etc/kafka/connect-log4j.properties .apt/usr/config
 
-KAFKA_HEAP_OPTS="-Xms1g -Xmx1g" .apt/usr/bin/connect-distributed dyno-connect-distributed.properties
+KAFKA_OPTS="-Djava.security.auth.login.config=$HOME/$JAAS_FILE" KAFKA_HEAP_OPTS="-Xms1g -Xmx1g" .apt/usr/bin/connect-distributed dyno-connect-distributed.properties

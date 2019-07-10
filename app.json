@@ -9,19 +9,18 @@
   ],
   "repository": "https://github.com/ahamidi/kafka-connect-jdbc",
   "env": {
-    "TRUSTSTORE_PASSWORD": {
-      "description": "Password used for the Java truststore",
-      "generator": "secret"
+    "CONNECT_USERNAME": {
+      "description": "username for the Connect REST API",
     },
-    "KEYSTORE_PASSWORD": {
-      "description": "Password used for the Java keystore",
+    "CONNECT_PASSWORD": {
+      "description": "Password used for the Connect REST API",
       "generator": "secret"
     }
   },
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "Standard-1X"
+      "size": "Standard-2X"
     }
   },
   "buildpacks": [
