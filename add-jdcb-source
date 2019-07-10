@@ -24,7 +24,17 @@ jdbc_url=$(echo ${!jdbc_env_var})
   exit 1
 }
 
-curl -s -X POST localhost:8080/connectors -H "Content-Type: application/json" --data @- << EOF
+connect_username=${CONNECT_USERNAME:-connect}
+connect_password=${CONNECT_PASSWORD}
+[ -z $CONNECT_PASSWORD ] && {
+  echo "CONNECT_PASSWORD is missing" >&2
+  exit 1
+}
+cat > curl_netrc <<CURLNETRC
+machine localhost login $connect_username password $connect_password
+CURLNETRC
+
+curl --netrc-file ./curl_netrc -s -X POST localhost:8080/connectors -H "Content-Type: application/json" --data @- << EOF
 {
   "name": "$connector_name",
   "config": {
