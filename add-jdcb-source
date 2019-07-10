@@ -61,3 +61,5 @@ curl --netrc-file ./curl_netrc -X POST https://$app_url/connectors -H "Content-T
 }
 EOF
 
+rm curl_netrc
+
