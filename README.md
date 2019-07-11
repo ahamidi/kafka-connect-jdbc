@@ -43,21 +43,6 @@ heroku ps:scale worker=1:Standard-2X
 ```
 
 You will then need to create the Connector (i.e. POST to the Kafka Connect REST 
-<<<<<<< HEAD
-API). As the REST API is not publicly accessible, you must use the provided script:
-
-```
-# Create the connector
-heroku run add-jdbc-connector <name>
-```
-
-
-You can delete the Connector using the provided "delete" scripts:
-
-```
-# Delete a connector
-heroku run delete-jdbc-connector <name>
-=======
 API).
 
 ```
@@ -90,5 +75,4 @@ You can delete the Connector using the following:
 ```
 # Delete a connector
 curl -u $CONNECT_USERNAME -X DELETE https://$APP_URL/connectors/$CONNECTOR_NAME
->>>>>>> bc9f6afac0ded25bebfb4fa399ef38d6332412cd
 ```
