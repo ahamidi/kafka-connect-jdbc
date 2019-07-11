@@ -24,11 +24,6 @@ You will also need to create the Consumer Group `connect-cluster`
 
 * `KAFKA_ADDON` (Default: `KAFKA`)
 * `POSTGRES_ADDON` (Default: `DATABASE`)
-<<<<<<< HEAD
-* `TRUSTSTORE_PASSWORD` (**Required**)
-* `KEYSTORE_PASSWORD` (**Required**)
-=======
->>>>>>> bc9f6afac0ded25bebfb4fa399ef38d6332412cd
 * `TABLE_WHITELIST` (**Required**) - A comma separated list of Postgres tables to sync.
 * `INCREMENTING_COLUMN` (Default: `id`) - The column to be used as the unique, incrementing key
 
