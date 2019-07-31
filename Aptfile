@@ -1,4 +1,4 @@
-:repo:deb [arch=amd64] http://packages.confluent.io/deb/5.0 stable main
+:repo:deb [arch=amd64] http://packages.confluent.io/deb/5.3 stable main
 confluent-kafka-2.11
 confluent-schema-registry
 confluent-kafka-connect-jdbc
