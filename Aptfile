@@ -1,3 +1,4 @@
+:key:confluent:http://packages.confluent.io/deb/5.3/archive.key
 :repo:deb [arch=amd64] http://packages.confluent.io/deb/5.3 stable main
 confluent-community-2.12
 jq
