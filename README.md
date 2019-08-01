@@ -13,9 +13,9 @@ For each Postgres Table that is being sync'd, you will need to create an associa
 Kafka topic using the naming scheme `pg-<table_name>`.
 
 You will also need to create the following topics for use by connect itself:
-* connect-offsets
-* connect-configs
-* connect-status
+* connect-offsets - 25 or 50 partitions, replication 3, compacted
+* connect-configs - 1 partition, replication 3, compacted
+* connect-status - 1 partition, replication 3, compacted
 
 **Kafka Consumer Group**
 You will also need to create the Consumer Group `connect-cluster`
@@ -26,11 +26,15 @@ You will also need to create the Consumer Group `connect-cluster`
 * `POSTGRES_ADDON` (Default: `DATABASE`)
 * `TABLE_WHITELIST` (**Required**) - A comma separated list of Postgres tables to sync.
 * `INCREMENTING_COLUMN` (Default: `id`) - The column to be used as the unique, incrementing key
+* `CONNECT_PASSWORD` (**Required**) - The HTTP Basic Auth password used for the REST API
 
 ### Buildpacks
 
-* Apt: `https://github.com/heroku/heroku-buildpack-apt`
+* Apt: `https://github.com/amiel/heroku-buildpack-apt#feature/support-adding-keys`
 * JVM: `heroku/jvm`
+
+_Note:_ Since we're using the confluent repo, we have to use the apt buildpack fork
+that adds support for importing keys.
 
 ## Usage
 
