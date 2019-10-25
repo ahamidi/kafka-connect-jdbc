@@ -73,13 +73,16 @@ internal.key.converter.schemas.enable=false
 internal.value.converter.schemas.enable=false
 
 offset.storage.topic=$(echo $kafka_prefix)connect-offsets
-offset.storage.replication.factor=1
+offset.storage.replication.factor=3
+offset.storage.partitions=25
 
 config.storage.topic=$(echo $kafka_prefix)connect-configs
-config.storage.replication.factor=1
+config.storage.replication.factor=3
+config.storage.partitions=1
 
 status.storage.topic=$(echo $kafka_prefix)connect-status
-status.storage.replication.factor=1
+status.storage.replication.factor=3
+status.storage.partitions=5
 
 offset.flush.interval.ms=10000
 
